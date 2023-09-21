@@ -1,0 +1,37 @@
+version: '3'
+
+networks:
+   sambaNet:
+     ipam:
+       driver: default
+       config:
+         - subnet: ${SUBNET}.0/24
+
+services:
+  sambaldap:
+    image: johann8/alpine-samba:${VERSION_SAMBA:-latest}
+    container_name: samba
+    restart: unless-stopped
+    volumes:
+      - ${DOCKERDIR}/data/samba/config/etc:/etc/samba:rw
+      - ${DOCKERDIR}/data/samba/smb-data:/var/lib/samba:rw
+      - ${DOCKERDIR}/data/samba/krb-data:/var/lib/krb5kdc:rw
+    cap_add:
+      - SYS_ADMIN
+    hostname: ${HOSTNAME_FQDN}              # defined in .env file
+    dns:
+      - "${SUBNET}.3"
+    dns_search:
+      - ${DOMAINNAME}                       # defined in .env file
+    environment:
+      - DOMAIN=${DOMAINNAME}                # defined in .env file
+      - DOMAINPASS=${DOMAINPASS}            # defined in .env file
+      - DNS_FORWARDER=${DNS_FORWARDER}      # defined in .env file
+      - NOCOMPLEXITY=${NOCOMPLEXITY}        # defined in .env file
+      - INSECURELDAP=${INSECURELDAP}        # defined in .env file
+      - PROFISION_DC=true                   # true / false enable / disable DC provision
+      - TZ=${TZ}                            # defined in .env file
+    networks:
+      sambaNet:
+        ipv4_address: ${SUBNET}.3           # defined in .env file
+
