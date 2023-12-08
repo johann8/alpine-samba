@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # set variables
-_VERSION=0.2.0
+_VERSION=0.3.0
 _TAG=alpine-samba
 
 # build image glpi
