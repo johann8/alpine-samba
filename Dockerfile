@@ -1,6 +1,6 @@
 ARG ARCH=
 
-ARG BASE_IMAGE=alpine:3.18
+ARG BASE_IMAGE=alpine:3.19
 
 FROM ${ARCH}${BASE_IMAGE}
 
@@ -16,7 +16,7 @@ LABEL org.label-schema.schema-version="1.0" \
       org.label-schema.vcs-url="https://github.com/johann8/samba" \
       org.label-schema.description="Docker container with Samba AD DC based on Alpine Linux"
 
-ARG SAMBA_DC_VERSION=4.18.5-r0
+ARG SAMBA_DC_VERSION=4.18.9-r0
 
 ENV TZ=Europe/Berlin
 
